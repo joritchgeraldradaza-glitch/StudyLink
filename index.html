@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyLink - Tutor Search</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #222;
+        }
+
+        /* HEADER */
+        header {
+            background-color: white;
+            border-bottom: 2px solid #333;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .account {
+            border: 1px solid #333;
+            padding: 8px 14px;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background-color: #e8e8e8;
+            border-bottom: 1px solid #555;
+            padding: 10px 40px;
+            display: flex;
+            gap: 10px;
+        }
+
+        nav button {
+            padding: 9px 15px;
+            background-color: white;
+            border: 1px solid #333;
+            cursor: pointer;
+        }
+
+        nav button:hover {
+            background-color: #ddd;
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1000px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 30px;
+            min-height: 550px;
+            border: 2px solid #333;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            margin: 15px 0 10px;
+        }
+
+        .description {
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        /* SEARCH */
+        .search-box {
+            border: 2px solid #333;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-row input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #333;
+        }
+
+        button {
+            padding: 10px 16px;
+            background-color: white;
+            border: 2px solid #333;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ddd;
+        }
+
+        /* TUTOR CARD */
+        .tutor-card {
+            border: 2px solid #333;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .photo {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            background-color: #eee;
+        }
+
+        .tutor-info {
+            flex: 1;
+        }
+
+        .tutor-info p {
+            margin: 6px 0;
+        }
+
+        .tags {
+            margin: 8px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            border: 1px solid #333;
+            padding: 4px 8px;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+        .rating {
+            margin-top: 8px;
+        }
+
+        /* FORM */
+        .form-box {
+            border: 2px solid #333;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #333;
+            font-family: Arial, sans-serif;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .form-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* PROFILE */
+        .profile-box {
+            border: 2px solid #333;
+            padding: 25px;
+        }
+
+        .profile-top {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .large-photo {
+            width: 110px;
+            height: 110px;
+            border: 2px solid #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #eee;
+        }
+
+        .profile-details {
+            flex: 1;
+        }
+
+        .profile-details p {
+            margin: 8px 0;
+        }
+
+        .reviews {
+            border-top: 1px solid #555;
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+
+        /* CONFIRMATION */
+        .confirmation {
+            border: 2px solid #333;
+            padding: 40px;
+            text-align: center;
+            background-color: #f7f7f7;
+        }
+
+        .confirmation h2 {
+            margin-bottom: 20px;
+        }
+
+        .status {
+            font-weight: bold;
+            border: 1px solid #333;
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 10px 0 20px;
+        }
+
+        /* FILTERS */
+        .filter-box {
+            border: 2px solid #333;
+            padding: 25px;
+        }
+
+        /* HIDE SCREENS */
+        .screen {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px;
+            }
+
+            nav {
+                padding: 10px;
+                flex-wrap: wrap;
+            }
+
+            main {
+                margin: 15px;
+                padding: 20px;
+            }
+
+            .search-row {
+                flex-direction: column;
+            }
+
+            .tutor-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">StudyLink</div>
+
+        <div class="account">
+            Student Account ▾
+        </div>
+    </header>
+
+
+    <!-- NAVIGATION -->
+    <nav>
+        <button onclick="showScreen('searchScreen')">
+            Tutor Search
+        </button>
+
+        <button onclick="showScreen('filterScreen')">
+            Filters
+        </button>
+
+        <button onclick="showScreen('profileScreen')">
+            Tutor Profile
+        </button>
+
+        <button onclick="showScreen('requestScreen')">
+            Request Session
+        </button>
+
+        <button onclick="showScreen('confirmationScreen')">
+            Request Status
+        </button>
+    </nav>
+
+
+    <!-- ====================================== -->
+    <!-- SCREEN 1: TUTOR SEARCH -->
+    <!-- FR-002 -->
+    <!-- ====================================== -->
+
+    <main id="searchScreen" class="screen active">
+
+        <h1>Find a Peer Tutor</h1>
+
+        <p class="description">
+            Search for available CSU peer tutors by name,
+            subject, or expertise.
+        </p>
+
+        <div class="search-box">
+
+            <div class="search-row">
+
+                <input
+                    type="text"
+                    value="Programming"
+                    placeholder="Search tutor, subject, or expertise"
+                >
+
+                <button onclick="showScreen('filterScreen')">
+                    Apply Filters
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <h2>Available Tutors</h2>
+
+
+        <!-- TUTOR 1 -->
+        <div class="tutor-card">
+
+            <div class="photo">
+                PHOTO
+            </div>
+
+            <div class="tutor-info">
+
+                <h3>Alex Dela Cruz</h3>
+
+                <p>
+                    <b>Program:</b>
+                    BS Computer Science
+                </p>
+
+                <div class="tags">
+
+                    <span class="tag">
+                        Programming
+                    </span>
+
+                    <span class="tag">
+                        Data Structures
+                    </span>
+
+                    <span class="tag">
+                        Java
+                    </span>
+
+                </div>
+
+                <p>
+                    <b>Availability:</b>
+                    Monday - Friday, 4:00 PM - 6:00 PM
+                </p>
+
+                <p class="rating">
+                    ★★★★★ 4.8
+                </p>
+
+            </div>
+
+            <button onclick="showScreen('profileScreen')">
+                View Profile
+            </button>
+
+        </div>
+
+
+        <!-- TUTOR 2 -->
+        <div class="tutor-card">
+
+            <div class="photo">
+                PHOTO
+            </div>
+
+            <div class="tutor-info">
+
+                <h3>Jamie Santos</h3>
+
+                <p>
+                    <b>Program:</b>
+                    BS Computer Science
+                </p>
+
+                <div class="tags">
+
+                    <span class="tag">
+                        Python
+                    </span>
+
+                    <span class="tag">
+                        Web Development
+                    </span>
+
+                </div>
+
+                <p>
+                    <b>Availability:</b>
+                    Tuesday - Thursday, 5:00 PM - 7:00 PM
+                </p>
+
+                <p class="rating">
+                    ★★★★☆ 4.5
+                </p>
+
+            </div>
+
+            <button onclick="showScreen('profileScreen')">
+                View Profile
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- ====================================== -->
+    <!-- SCREEN 2: FILTERS -->
+    <!-- FR-003 -->
+    <!-- ====================================== -->
+
+    <main id="filterScreen" class="screen">
+
+        <h1>Filter Tutors</h1>
+
+        <p class="description">
+            Narrow the available tutors using relevant criteria.
+        </p>
+
+
+        <div class="filter-box">
+
+            <label>
+                Subject / Course
+            </label>
+
+            <select>
+
+                <option>
+                    Programming
+                </option>
+
+                <option>
+                    Data Structures
+                </option>
+
+                <option>
+                    Mathematics
+                </option>
+
+            </select>
+
+
+            <label>
+                Expertise
+            </label>
+
+            <select>
+
+                <option>
+                    Java
+                </option>
+
+                <option>
+                    Python
+                </option>
+
+                <option>
+                    Web Development
+                </option>
+
+            </select>
+
+
+            <label>
+                Availability
+            </label>
+
+            <select>
+
+                <option>
+                    Any Available Time
+                </option>
+
+                <option>
+                    Afternoon
+                </option>
+
+                <option>
+                    Evening
+                </option>
+
+            </select>
+
+
+            <div class="form-buttons">
+
+                <button onclick="showScreen('searchScreen')">
+                    Apply Filters
+                </button>
+
+                <button onclick="showScreen('searchScreen')">
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ====================================== -->
+    <!-- SCREEN 3: TUTOR PROFILE -->
+    <!-- FR-004 -->
+    <!-- ====================================== -->
+
+    <main id="profileScreen" class="screen">
+
+        <h1>Tutor Profile</h1>
+
+
+        <div class="profile-box">
+
+            <div class="profile-top">
+
+                <div class="large-photo">
+                    PHOTO
+                </div>
+
+
+                <div class="profile-details">
+
+                    <h2>
+                        Alex Dela Cruz
+                    </h2>
+
+                    <p>
+                        <b>Program:</b>
+                        BS Computer Science
+                    </p>
+
+                    <p>
+                        <b>Subjects:</b>
+                        Programming, Data Structures
+                    </p>
+
+                    <p>
+                        <b>Expertise:</b>
+                        Java, C, Algorithms
+                    </p>
+
+                    <p>
+                        <b>Availability:</b>
+                        Monday - Friday,
+                        4:00 PM - 6:00 PM
+                    </p>
+
+                    <p>
+                        <b>Rating:</b>
+                        ★★★★★ 4.8
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="reviews">
+
+                <h3>
+                    Reviews
+                </h3>
+
+                <p>
+                    "Helpful and easy to understand."
+                </p>
+
+                <br>
+
+                <p>
+                    "Good at explaining programming concepts."
+                </p>
+
+            </div>
+
+
+            <div class="form-buttons">
+
+                <button onclick="showScreen('requestScreen')">
+                    Request Tutoring Session
+                </button>
+
+                <button onclick="showScreen('searchScreen')">
+                    Back to Search
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ====================================== -->
+    <!-- SCREEN 4: REQUEST SESSION -->
+    <!-- FR-007 -->
+    <!-- ====================================== -->
+
+    <main id="requestScreen" class="screen">
+
+        <h1>
+            Request a Tutoring Session
+        </h1>
+
+        <p class="description">
+            Send a tutoring request to Alex Dela Cruz.
+        </p>
+
+
+        <div class="form-box">
+
+            <label>
+                Subject / Topic
+            </label>
+
+            <input
+                type="text"
+                value="Data Structures"
+            >
+
+
+            <label>
+                Preferred Date
+            </label>
+
+            <input
+                type="date"
+            >
+
+
+            <label>
+                Preferred Time
+            </label>
+
+            <select>
+
+                <option>
+                    4:00 PM - 5:00 PM
+                </option>
+
+                <option>
+                    5:00 PM - 6:00 PM
+                </option>
+
+            </select>
+
+
+            <label>
+                Additional Details
+            </label>
+
+            <textarea
+                rows="5"
+                placeholder="Describe what you need help with..."
+            ></textarea>
+
+
+            <div class="form-buttons">
+
+                <button onclick="showScreen('confirmationScreen')">
+                    Submit Tutoring Request
+                </button>
+
+                <button onclick="showScreen('profileScreen')">
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ====================================== -->
+    <!-- SCREEN 5: CONFIRMATION -->
+    <!-- FR-009 -->
+    <!-- ====================================== -->
+
+    <main id="confirmationScreen" class="screen">
+
+        <h1>
+            Request Status
+        </h1>
+
+
+        <div class="confirmation">
+
+            <h2>
+                ✓ Tutoring Request Sent
+            </h2>
+
+            <p>
+                Your request has been submitted
+                to <b>Alex Dela Cruz</b>.
+            </p>
+
+            <br>
+
+            <p>
+                <b>Subject:</b>
+                Data Structures
+            </p>
+
+            <p>
+                <b>Preferred Schedule:</b>
+                Selected date and time
+            </p>
+
+
+            <div class="status">
+                Status: PENDING
+            </div>
+
+
+            <p>
+                The tutor can accept or reject
+                the tutoring request.
+            </p>
+
+
+            <br>
+
+            <button onclick="showScreen('searchScreen')">
+                Back to Tutor Search
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- ====================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ====================================== -->
+
+    <script>
+
+        function showScreen(screenID) {
+
+            // Hide all screens
+            const screens =
+                document.querySelectorAll(".screen");
+
+            screens.forEach(function(screen) {
+
+                screen.classList.remove("active");
+
+            });
+
+
+            // Show selected screen
+            document
+                .getElementById(screenID)
+                .classList.add("active");
+
+
+            // Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>
